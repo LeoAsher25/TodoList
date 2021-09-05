@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap");
+
+* {
+  font-family: "Nunito", sans-serif;
+}
+
+button {
+  border: none;
+}
+
+.app {
+  .app-title {
+    margin-top: 3rem;
+    font-size: 3rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .app-content {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: top;
+
+    .todo-wrap {
+      margin-left: 3rem;
+
+      button.add-new-todo-btn {
+        padding: 0.8rem 3.5rem;
+        margin-bottom: 2rem;
+        border-radius: 1rem;
+        cursor: pointer;
+
+        font-size: 1.3rem;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        color: #fff;
+        background-color: #2572a9;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+}
