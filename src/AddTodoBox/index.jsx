@@ -1,45 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import './AddTodoBox.scss';
+import "./AddTodoBox.scss";
 
 const AddTodoBox = (props) => {
-  const { todos, setTodos, handleOpenAddTodoBox } = props;
+  const { todos, setTodos, setAddBoxIsOpen } = props;
 
-  function handleFormSubmit(e) {
+  const [newTodo, setNewTodo] = useState({
+    id: 0,
+    name: "",
+    level: "Nguy cấp",
+  });
+
+  // handle when form submitted
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    const formEle = document.querySelector(".form-wrap");
-    const nameInputEle = formEle.querySelector("input[type='text']");
-    const levelSelectEle = formEle.querySelector("select");
+    if (newTodo.name.trim() != "") {
+      newTodo.id = todos.length + 1;
 
-    if (nameInputEle.value.trim() !== "") {
-      const newTodo = {
-        id: todos.length + 1,
-        name: nameInputEle.value,
-        level: levelSelectEle.value,
-      };
       setTodos([...todos, newTodo]);
+
+      setNewTodo({
+        id: 0,
+        name: "",
+        level: "Nguy cấp",
+      });
+
+      setAddBoxIsOpen(false);
     }
-    nameInputEle.value = "";
-    levelSelectEle.value = "Nguy cấp";
-  }
+  };
 
+  // handle when input or select ele change
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
 
+    setNewTodo({
+      ...newTodo,
+      [name]: value,
+    });
+  };
 
   return (
     <div className="add-todo-box">
-      <span className="close-box" onClick={(e) =>handleOpenAddTodoBox(e)}> &times; </span>
+      <span className="close-box" onClick={() => setAddBoxIsOpen(false)}>
+        {" "}
+        &times;{" "}
+      </span>
       <h3 className="heading">Thêm công việc mới: </h3>
 
       <form action="" className="form-wrap">
         <div className="form-gr">
           <label htmlFor="todoName">Tên công việc: </label>
-          <input type="text" id="todoName" placeholder="nhập công việc" />
+          <input
+            type="text"
+            id="todoName"
+            name="name"
+            value={newTodo.name}
+            onChange={(e) => handleOnChange(e)}
+            placeholder="nhập công việc"
+            autoComplete="off"
+          />
         </div>
 
         <div className="form-gr">
           <label htmlFor="todoLevel">Mức độ</label>
 
-          <select name="todoLevel" id="todoLevel">
+          <select
+            id="todoLevel"
+            name="level"
+            value={newTodo.level}
+            onChange={(e) => handleOnChange(e)}
+          >
             <option value="Nguy cấp">Nguy cấp</option>
             <option value="Nguy cấp 2">Nguy cấp 2</option>
             <option value="Nguy cấp 3">Nguy cấp 3</option>
@@ -50,7 +80,7 @@ const AddTodoBox = (props) => {
           <button type="submit" onClick={(e) => handleFormSubmit(e)}>
             Thêm
           </button>
-          <button onClick={(e) =>handleOpenAddTodoBox(e)}>Hủy bỏ</button>
+          <button onClick={() => setAddBoxIsOpen(false)}>Hủy bỏ</button>
         </div>
       </form>
     </div>
@@ -58,8 +88,9 @@ const AddTodoBox = (props) => {
 };
 
 AddTodoBox.propTypes = {
-  todo: PropTypes.array,
-  handleAddTodo: PropTypes.func,
+  todos: PropTypes.array,
+  setTodos: PropTypes.func,
+  setAddBoxIsOpen: PropTypes.func,
 };
 
 export default AddTodoBox;

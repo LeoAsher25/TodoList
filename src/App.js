@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import AddTodoBox from "./AddTodoBox";
 import "./App.scss";
 import TodoList from "./TodoList";
@@ -22,29 +22,38 @@ function App() {
     },
   ]);
 
-  let addBoxIsOpen = false;
+  const [addBoxIsOpen, setAddBoxIsOpen] = useState(true);
 
   function handleOpenAddTodoBox(e) {
     e.preventDefault();
     const addTodoBoxEle = document.querySelector(".add-todo-box");
-    console.log(addTodoBoxEle)
-    if(addTodoBoxEle){
+    console.log(addTodoBoxEle);
+    if (addTodoBoxEle) {
       addTodoBoxEle.classList.toggle("active");
     }
   }
-
 
   return (
     <div className="app">
       <h3 className="app-title">To Do List - Team Web D19</h3>
       <div className="app-content">
-        {/* <div className="add-todo-box"> */}
-          <AddTodoBox todos={todos} setTodos={setTodos} handleOpenAddTodoBox={handleOpenAddTodoBox} />
-        {/* </div> */}
+        {addBoxIsOpen ? (
+          <AddTodoBox
+            todos={todos}
+            setTodos={setTodos}
+            setAddBoxIsOpen={setAddBoxIsOpen}
+          />
+        ) : (
+          ""
+        )}
 
         <div className="todo-wrap">
-          <button className="add-new-todo-btn" 
-          onClick={(e) => handleOpenAddTodoBox(e)}  >Thêm công việc mới</button>
+          <button
+            className="add-new-todo-btn"
+            onClick={() => setAddBoxIsOpen(true)}
+          >
+            Thêm công việc mới
+          </button>
           <TodoList todos={todos} setTodos={setTodos} />
         </div>
       </div>

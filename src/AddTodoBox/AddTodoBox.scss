@@ -11,18 +11,6 @@
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
   background-color: #fff;
 
-  transition: 0.5s;
-  transform-origin: right;
-  transform: scaleX(0);
-  // max-width: 0rem;
-  opacity: 0;
-
-  &.active {
-    max-width: 35rem;
-    transform: scaleX(1);
-    opacity: 1;
-  }
-
   .close-box {
     position: absolute;
     top: 1rem;

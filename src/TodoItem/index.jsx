@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const TodoItem = (props) => {
   const { todo, handleRemoveTodo } = props;
-
 
 
   return (
