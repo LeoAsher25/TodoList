@@ -1,28 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import "./AddTodoBox.scss";
 
 const AddTodoBox = (props) => {
-  const { todos, setTodos, setAddBoxIsOpen } = props;
-
-  const [newTodo, setNewTodo] = useState({
-    id: 0,
-    name: "",
-    level: "Nguy cấp",
-  });
+  const {
+    todos,
+    setTodos,
+    optionLevels,
+    setAddBoxIsOpen,
+    isEditting,
+    setIsEditting,
+    newTodo,
+    setNewTodo,
+  } = props;
 
   // handle when form submitted
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (newTodo.name.trim() != "") {
-      newTodo.id = todos.length + 1;
 
-      setTodos([...todos, newTodo]);
+    if (newTodo.name.trim() !== "") {
+      if (isEditting) {
+        const tmpTodos = [...todos];
+        const index = todos.findIndex((todo) => todo.id === newTodo.id);
+        tmpTodos.splice(index, 1, newTodo);
+
+        setTodos([...tmpTodos]);
+        setIsEditting(false);
+      } else {
+        newTodo.id = todos.length + 1;
+        setTodos([...todos, newTodo]);
+      }
 
       setNewTodo({
         id: 0,
         name: "",
-        level: "Nguy cấp",
+        level: optionLevels[0],
       });
 
       setAddBoxIsOpen(false);
@@ -35,7 +47,7 @@ const AddTodoBox = (props) => {
 
     setNewTodo({
       ...newTodo,
-      [name]: value,
+      [name]: name === "name" ? value : JSON.parse(value),
     });
   };
 
@@ -45,7 +57,9 @@ const AddTodoBox = (props) => {
         {" "}
         &times;{" "}
       </span>
-      <h3 className="heading">Thêm công việc mới: </h3>
+      <h3 className="heading">
+        {isEditting ? "Edit công việc" : "Thêm công việc mới: "}{" "}
+      </h3>
 
       <form action="" className="form-wrap">
         <div className="form-gr">
@@ -67,18 +81,20 @@ const AddTodoBox = (props) => {
           <select
             id="todoLevel"
             name="level"
-            value={newTodo.level}
+            value={JSON.stringify(newTodo.level)}
             onChange={(e) => handleOnChange(e)}
           >
-            <option value="Nguy cấp">Nguy cấp</option>
-            <option value="Nguy cấp 2">Nguy cấp 2</option>
-            <option value="Nguy cấp 3">Nguy cấp 3</option>
+            {optionLevels.map((option, index) => (
+              <option key={index} value={JSON.stringify(option)}>
+                {option.titleLevel}{" "}
+              </option>
+            ))}
           </select>
         </div>
 
         <div className="btn-wrap">
           <button type="submit" onClick={(e) => handleFormSubmit(e)}>
-            Thêm
+            {!isEditting ? "Thêm" : "Save"}
           </button>
           <button onClick={() => setAddBoxIsOpen(false)}>Hủy bỏ</button>
         </div>
@@ -91,6 +107,10 @@ AddTodoBox.propTypes = {
   todos: PropTypes.array,
   setTodos: PropTypes.func,
   setAddBoxIsOpen: PropTypes.func,
+  isEditting: PropTypes.bool,
+  setIsEditting: PropTypes.func,
+  newTodo: PropTypes.object,
+  setNewTodo: PropTypes.func,
 };
 
 export default AddTodoBox;
