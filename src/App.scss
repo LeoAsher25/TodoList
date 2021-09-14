@@ -6,6 +6,10 @@
 
 button {
   border: none;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
 }
 
 .app {
@@ -26,48 +30,8 @@ button {
 
     .todo-wrap {
       margin-left: 3rem;
-
-      .home-btn-wrap {
-        margin-bottom: 2rem;
-        display: flex;
-
-        button.add-new-todo-btn {
-          margin-right: 1rem;
-          cursor: pointer;
-          border-radius: 0.5rem;
-
-          font-size: 1.3rem;
-          font-weight: 600;
-          color: #fff;
-
-          background-color: #2572a9;
-          box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
-          padding: 0.8rem 3.5rem;
-          text-transform: uppercase;
-        }
-
-        form.sort-todos-form {
-          display: flex;
-
-          .sort-todos-wrap {
-            background-color: #2572a9;
-            border: none;
-            outline: none;
-            border-radius: 0.5rem;
-
-            color: #fff;
-            padding: 0 1.2rem;
-
-            option {
-              background-color: #fff;
-              color: #000;
-            }
-            option[default] {
-              display: none;
-            }
-          }
-        }
-      }
     }
+    // end of todo-wrap
   }
+  // end of .app-content
 }

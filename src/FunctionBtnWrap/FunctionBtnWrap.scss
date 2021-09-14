@@ -1,0 +1,69 @@
+.function-btn-wrap {
+  margin-bottom: 2rem;
+  // display: flex;
+
+  .row1,
+  .row2 {
+    display: flex;
+
+    button.add-new-todo-btn,
+    button {
+      margin-right: 0.5rem;
+      cursor: pointer;
+      border-radius: 0.5rem;
+
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+
+      background-color: #2572a9;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+      padding: 0.8rem 3rem;
+      text-transform: uppercase;
+    }
+
+    .sort-todos-form,
+    .filter-todos-form {
+      display: flex;
+      margin-right: 3rem;
+
+      .sort-todos-wrap,
+      .filter-todos-wrap {
+        background-color: aliceblue;
+        padding: 0 1.2rem;
+
+        option {
+          background-color: aliceblue;
+        }
+        option[default] {
+          display: none;
+        }
+      }
+      // end of .sort-todos-wrap
+    }
+  }
+
+  // end of .row1, .row2
+
+  .row1 {
+    .search-form {
+      margin-left: 8.1rem;
+      display: flex;
+
+      button {
+        padding-top: unset;
+        padding-bottom: unset;
+        font-size: 1.8rem;
+      }
+
+      input {
+        padding: 0 2rem;
+      }
+    }
+  }
+
+  .row2 {
+    margin-top: 1rem;
+  }
+}
+// end of .function-btn-wrap

@@ -1,12 +1,24 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
+
+// import components
 import AddTodoBox from "./AddTodoBox";
-import "./App.scss";
 import TodoList from "./TodoList";
+import FunctionBtnWrap from "./FunctionBtnWrap";
+
+// import scss
+import "./App.scss";
 
 function App() {
-  const SelectEleRef = useRef(null);
+  const [currentSortType, setCurrentSortType] = useState("");
+  const [currentFilterType, setCurrentFilterType] = useState("");
 
-  // const optionLevels = ["Không làm không sao", "Phải làm", "Làm ngay"];
+  const sortTypesList = [
+    "Tên: a-z",
+    "Tên: z-a",
+    "Mức độ: Tăng dần",
+    "Mức độ: Giảm dần",
+  ];
+
   const optionLevels = [
     {
       titleLevel: "Không làm không sao",
@@ -25,10 +37,22 @@ function App() {
   const [todos, setTodos] = useState([
     {
       id: 1,
-      name: "Sleeping",
+      name: "b",
       level: optionLevels[0],
     },
+    {
+      id: 2,
+      name: "a",
+      level: optionLevels[2],
+    },
+    {
+      id: 3,
+      name: "c",
+      level: optionLevels[1],
+    },
   ]);
+
+  const [processedTodos, setProcessedTodos] = useState(todos);
 
   const [newTodo, setNewTodo] = useState({
     id: 0,
@@ -38,8 +62,33 @@ function App() {
 
   const [isEditting, setIsEditting] = useState(false);
 
-  const [addBoxIsOpen, setAddBoxIsOpen] = useState(true);
+  const [addBoxIsOpen, setAddBoxIsOpen] = useState(false);
 
+  // handle edit or add todo when click submit form in AddTodoBox
+  // {isEditting
+  // ? (find index of edited todo in processedTodos, then replace tmpTodos to edited todo)
+  // : (add newTodo to the end of todos) }
+  const handleAddTodoBoxSubmit = () => {
+    if (isEditting) {
+      const tmpTodos = [...todos];
+      const index = processedTodos.findIndex((todo) => todo.id === newTodo.id);
+      tmpTodos.splice(index, 1, newTodo);
+
+      setProcessedTodos([...tmpTodos]);
+      setIsEditting(false);
+    } else {
+      newTodo.id = todos.length + 1;
+      setTodos([...todos, newTodo]);
+    }
+    setNewTodo({
+      id: 0,
+      name: "",
+      level: optionLevels[0],
+    });
+  };
+
+  // handle when click "Sửa" button of todoItem in table todolist
+  // take a param and pass this param to setNewTodo
   const handleSetIsEditting = (todo) => {
     setNewTodo({
       id: todo.id,
@@ -50,11 +99,43 @@ function App() {
     setAddBoxIsOpen(true);
   };
 
-  const handleSortTodo = (e) => {
-    const sortType = e.target.value;
-    const tmpTodos = [...todos];
+  // handle when click on "Sort" button in FunctionBtnWrap
+  // takes a param d pass this param to setCurrentSortType
+  const handleSortFormOnSubmit = (e, sortType) => {
+    e.preventDefault();
+    setCurrentSortType(sortType);
 
-    switch (sortType) {
+    // sorting();
+  };
+
+  // handle when click on "Filter" button in FunctionBtnWrap
+  // takes a param and pass this param to setCurrentFilterType
+  const handleFilterFormOnSubmit = (e, filterType) => {
+    e.preventDefault();
+    setCurrentFilterType(filterType);
+    filtering();
+  };
+
+  const handleSearchFormOnSubmit = (searchTerm) => {
+    const searchedTodos = [];
+    searchTerm = searchTerm.toLowerCase().trim();
+    todos.forEach((todo) => {
+      if (
+        todo.id.toString().includes(searchTerm) ||
+        todo.name.toLowerCase().includes(searchTerm) ||
+        todo.level.titleLevel.toLowerCase().includes(searchTerm)
+      ) {
+        searchedTodos.push(todo);
+      }
+    });
+
+    setProcessedTodos(searchedTodos);
+  };
+
+  // handle sorting,
+  function sorting() {
+    const tmpTodos = [...processedTodos];
+    switch (currentSortType) {
       case "Tên: a-z":
         tmpTodos.sort((t1, t2) => {
           let t1name = t1.name.toLowerCase();
@@ -95,8 +176,68 @@ function App() {
         break;
     }
 
-    setTodos(tmpTodos);
+    setProcessedTodos(tmpTodos);
+  }
+
+  // handle filtering
+  function filtering() {
+    let tmpTodos = [];
+    if (
+      optionLevels.findIndex(
+        (level) => level.titleLevel === currentFilterType
+      ) !== -1
+    ) {
+      tmpTodos = todos.filter(
+        (todo) => todo.level.titleLevel === currentFilterType
+      );
+    } else {
+      tmpTodos = [...todos];
+    }
+    setProcessedTodos(tmpTodos);
+  }
+
+  // handle to remove the selected todo when click "Xóa" btn in TodoItem
+  function handleRemoveTodo(id) {
+    let newTodos = todos.filter((todo) => todo.id !== id);
+    setTodos([...newTodos]);
+  }
+
+  // handle change level of todo when click on level box in table
+  // take three params: changeType, todo, index
+  const handleChangeLevel = (changeType, todo, index) => {
+    let indexInOptionLevels = optionLevels.findIndex(
+      (item) => item.titleLevel === todo.level.titleLevel
+    );
+    switch (changeType) {
+      case "Decrease":
+        if (indexInOptionLevels === optionLevels.length - 1) {
+          indexInOptionLevels = 0;
+        } else {
+          indexInOptionLevels += 1;
+        }
+        break;
+
+      case "Increase":
+        indexInOptionLevels = (indexInOptionLevels + 1) % optionLevels.length;
+        break;
+
+      default:
+        break;
+    }
+
+    todo.level = optionLevels[indexInOptionLevels];
+    const tmpTodos = [...todos];
+    tmpTodos.splice(index, 1, todo);
+    setTodos([...tmpTodos]);
   };
+
+  useEffect(() => {
+    sorting();
+  }, [todos.length, currentSortType]);
+
+  useEffect(() => {
+    filtering();
+  }, [todos.length, currentFilterType]);
 
   return (
     <div className="app">
@@ -104,50 +245,33 @@ function App() {
       <div className="app-content">
         {addBoxIsOpen ? (
           <AddTodoBox
-            todos={todos}
-            setTodos={setTodos}
-            optionLevels={optionLevels}
-            setAddBoxIsOpen={setAddBoxIsOpen}
-            isEditting={isEditting}
-            setIsEditting={setIsEditting}
+            hidden={!addBoxIsOpen}
             newTodo={newTodo}
+            isEditting={isEditting}
+            optionLevels={optionLevels}
             setNewTodo={setNewTodo}
+            setAddBoxIsOpen={setAddBoxIsOpen}
+            handleAddTodoBoxSubmit={handleAddTodoBoxSubmit}
           />
         ) : (
           ""
         )}
 
         <div className="todo-wrap">
-          <div className="home-btn-wrap">
-            <button
-              className="add-new-todo-btn"
-              onClick={() => setAddBoxIsOpen(!addBoxIsOpen)}
-            >
-              Thêm công việc mới
-            </button>
-
-            <form action="" className="sort-todos-form">
-              <select
-                ref={SelectEleRef}
-                name="sortTodos"
-                id="sortTodos"
-                className="sort-todos-wrap"
-                onChange={(e) => handleSortTodo(e)}
-              >
-                <option default>Sort</option>
-                <option value="Tên: a-z">Tên: a-z</option>
-                <option value="Tên: z-a">Tên: z-a</option>
-                <option value="Mức độ: Tăng dần">Mức độ: Tăng dần</option>
-                <option value="Mức độ: Giảm dần">Mức độ: Giảm dần</option>
-              </select>
-            </form>
-          </div>
-          <TodoList
-            todos={todos}
-            setTodos={setTodos}
-            handleSetIsEditting={handleSetIsEditting}
-            setNewTodo={setNewTodo}
+          <FunctionBtnWrap
+            sortTypesList={sortTypesList}
             optionLevels={optionLevels}
+            setAddBoxIsOpen={setAddBoxIsOpen}
+            handleSortFormOnSubmit={handleSortFormOnSubmit}
+            handleFilterFormOnSubmit={handleFilterFormOnSubmit}
+            handleSearchFormOnSubmit={handleSearchFormOnSubmit}
+          />
+
+          <TodoList
+            processedTodos={processedTodos}
+            handleRemoveTodo={handleRemoveTodo}
+            handleSetIsEditting={handleSetIsEditting}
+            handleChangeLevel={handleChangeLevel}
           />
         </div>
       </div>

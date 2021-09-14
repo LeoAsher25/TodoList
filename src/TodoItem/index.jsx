@@ -4,23 +4,27 @@ import PropTypes from "prop-types";
 const TodoItem = (props) => {
   const {
     todo,
+    indexOfTodo,
     handleRemoveTodo,
     handleSetIsEditting,
-    index,
     handleChangeLevel,
   } = props;
 
   return (
     <tr className="todo-item">
-      <td>{index + 1}</td>
+      <td>{indexOfTodo + 1}</td>
       <td>{todo.name}</td>
       <td className="level-box">
         <span>{todo.level.titleLevel}</span>
         <div className="change-level">
-          <span onClick={(e) => handleChangeLevel(e, 0, todo, index)}>
+          <span
+            onClick={() => handleChangeLevel("Decrease", todo, indexOfTodo)}
+          >
             <i className="fas fa-chevron-up"></i>
           </span>
-          <span onClick={(e) => handleChangeLevel(e, 1, todo, index)}>
+          <span
+            onClick={() => handleChangeLevel("Increase", todo, indexOfTodo)}
+          >
             <i className="fas fa-chevron-down"></i>
           </span>
         </div>
@@ -31,7 +35,7 @@ const TodoItem = (props) => {
         </button>
         <button
           className="remove-todo"
-          onClick={(e) => handleRemoveTodo(e, todo.id)}
+          onClick={(e) => handleRemoveTodo(todo.id)}
         >
           Xóa
         </button>

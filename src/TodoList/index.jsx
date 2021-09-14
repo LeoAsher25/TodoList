@@ -4,45 +4,13 @@ import TodoItem from "../TodoItem";
 import "./TodoList.scss";
 
 const TodoList = (props) => {
-  const { todos, setTodos, handleSetIsEditting, optionLevels } = props;
-
-  function handleRemoveTodo(e, id) {
-    let newTodos = todos.filter((todo) => todo.id !== id);
-    setTodos([...newTodos]);
-  }
-
-  const handleChangeLevel = (e, isDecrease, todo, index) => {
-    let indexInOptionLevels = optionLevels.findIndex(
-      (item) => item.titleLevel === todo.level.titleLevel
-    );
-
-    switch (isDecrease) {
-      case 0:
-        if (indexInOptionLevels === optionLevels.length - 1) {
-          indexInOptionLevels = 0;
-        } else {
-          indexInOptionLevels += 1;
-        }
-        break;
-
-      case 1:
-        if (indexInOptionLevels === 0) {
-          indexInOptionLevels = optionLevels.length - 1;
-        } else {
-          indexInOptionLevels -= 1;
-        }
-        break;
-
-      default:
-        break;
-    }
-
-    todo.level = optionLevels[indexInOptionLevels];
-    const tmpTodos = [...todos];
-    tmpTodos.splice(index, 1, todo);
-    setTodos([...tmpTodos]);
-  };
-
+  // const { todos, setTodos, handleSetIsEditting, optionLevels } = props;
+  const {
+    processedTodos,
+    handleRemoveTodo,
+    handleSetIsEditting,
+    handleChangeLevel,
+  } = props;
   return (
     <div className="todo-list">
       <table border="1" cellPadding="0" cellSpacing="0">
@@ -54,14 +22,13 @@ const TodoList = (props) => {
             <th width="200">Hành động</th>
           </tr>
 
-          {todos.map((todo, index) => (
+          {processedTodos.map((todo, index) => (
             <TodoItem
               key={todo.id}
               todo={todo}
+              indexOfTodo={index}
               handleRemoveTodo={handleRemoveTodo}
               handleSetIsEditting={handleSetIsEditting}
-              index={index}
-              optionLevels={optionLevels}
               handleChangeLevel={handleChangeLevel}
             />
           ))}
@@ -72,9 +39,10 @@ const TodoList = (props) => {
 };
 
 TodoList.propTypes = {
-  todos: PropTypes.array,
-  setTodos: PropTypes.func,
+  processedTodos: PropTypes.array,
   handleRemoveTodo: PropTypes.func,
+  handleSetIsEditting: PropTypes.func,
+  handleChangeLevel: PropTypes.func,
 };
 
 export default TodoList;

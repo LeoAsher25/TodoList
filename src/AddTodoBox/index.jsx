@@ -1,49 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./AddTodoBox.scss";
 
 const AddTodoBox = (props) => {
   const {
-    todos,
-    setTodos,
-    optionLevels,
-    setAddBoxIsOpen,
-    isEditting,
-    setIsEditting,
     newTodo,
+    isEditting,
+    optionLevels,
     setNewTodo,
+    setAddBoxIsOpen,
+    handleAddTodoBoxSubmit,
   } = props;
+
+  const [inputIsEmpty, setInputIsEmpty] = useState(false);
 
   // handle when form submitted
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
     if (newTodo.name.trim() !== "") {
-      if (isEditting) {
-        const tmpTodos = [...todos];
-        const index = todos.findIndex((todo) => todo.id === newTodo.id);
-        tmpTodos.splice(index, 1, newTodo);
-
-        setTodos([...tmpTodos]);
-        setIsEditting(false);
-      } else {
-        newTodo.id = todos.length + 1;
-        setTodos([...todos, newTodo]);
-      }
-
-      setNewTodo({
-        id: 0,
-        name: "",
-        level: optionLevels[0],
-      });
+      handleAddTodoBoxSubmit();
 
       setAddBoxIsOpen(false);
+      setInputIsEmpty(false);
+    } else {
+      setInputIsEmpty(true);
     }
   };
 
   // handle when input or select ele change
   const handleOnChange = (e) => {
     const { name, value } = e.target;
+    setInputIsEmpty(false);
 
     setNewTodo({
       ...newTodo,
@@ -54,8 +42,7 @@ const AddTodoBox = (props) => {
   return (
     <div className="add-todo-box">
       <span className="close-box" onClick={() => setAddBoxIsOpen(false)}>
-        {" "}
-        &times;{" "}
+        &times;
       </span>
       <h3 className="heading">
         {isEditting ? "Edit công việc" : "Thêm công việc mới: "}{" "}
@@ -73,6 +60,14 @@ const AddTodoBox = (props) => {
             placeholder="nhập công việc"
             autoComplete="off"
           />
+
+          <span
+            className="input-empty-alert"
+            hidden={!inputIsEmpty}
+            style={{ color: "red", margin: "5px 0 0 15px", fontSize: "12px" }}
+          >
+            Tên công việc không được để trống
+          </span>
         </div>
 
         <div className="form-gr">
@@ -96,7 +91,14 @@ const AddTodoBox = (props) => {
           <button type="submit" onClick={(e) => handleFormSubmit(e)}>
             {!isEditting ? "Thêm" : "Save"}
           </button>
-          <button onClick={() => setAddBoxIsOpen(false)}>Hủy bỏ</button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              return setAddBoxIsOpen(false);
+            }}
+          >
+            Hủy bỏ
+          </button>
         </div>
       </form>
     </div>
@@ -104,13 +106,12 @@ const AddTodoBox = (props) => {
 };
 
 AddTodoBox.propTypes = {
-  todos: PropTypes.array,
-  setTodos: PropTypes.func,
-  setAddBoxIsOpen: PropTypes.func,
-  isEditting: PropTypes.bool,
-  setIsEditting: PropTypes.func,
   newTodo: PropTypes.object,
+  isEditting: PropTypes.bool,
+  optionLevels: PropTypes.array,
   setNewTodo: PropTypes.func,
+  setAddBoxIsOpen: PropTypes.func,
+  handleAddTodoBoxSubmit: PropTypes.func,
 };
 
 export default AddTodoBox;
