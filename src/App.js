@@ -42,23 +42,19 @@ function App() {
     },
   ];
 
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      name: "b",
-      level: optionLevels[0],
-    },
-    {
-      id: 2,
-      name: "a",
-      level: optionLevels[2],
-    },
-    {
-      id: 3,
-      name: "c",
-      level: optionLevels[1],
-    },
-  ]);
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    let localTodos = localStorage.getItem("todos");
+    if (localStorage) {
+      setTodos(JSON.parse(localTodos));
+    }
+  }, []);
+  
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos.length]);
+
 
   const [processedTodos, setProcessedTodos] = useState(todos);
 
