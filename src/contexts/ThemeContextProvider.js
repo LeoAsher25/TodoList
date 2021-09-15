@@ -4,7 +4,7 @@ export const ThemeContext = React.createContext();
 
 const ThemeContextProvider = (props) => {
   const [theme, setTheme] = useState({
-    isLightTheme: false,
+    isLightTheme: true,
     ligthTheme: {
       bgColor: "#fafafa",
       color: "#111",
