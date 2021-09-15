@@ -1,6 +1,8 @@
 .add-todo-box {
-  position: relative;
+  position: absolute;
   overflow: hidden;
+  z-index: 10;
+  left: 10%;
 
   padding: 2rem;
   width: 35rem;
@@ -29,7 +31,6 @@
   }
 
   .form-wrap {
-    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     // align-items: center;
@@ -53,6 +54,7 @@
 
       input,
       select {
+        font-size: 1.4rem;
         padding: 0.5rem 1.5rem;
         border: 1px solid #aaa;
       }
@@ -79,6 +81,8 @@
     justify-content: space-around;
     margin-top: 1rem;
 
+    font-size: 1.4rem;
+
     button {
       width: 10rem;
       height: 3.6rem;
@@ -86,7 +90,6 @@
       cursor: pointer;
 
       text-transform: uppercase;
-      color: #fff;
       font-weight: 600;
 
       &:first-child {

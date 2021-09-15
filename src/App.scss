@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap");
 
-* {
-  font-family: "Nunito", sans-serif;
-}
-
 button {
   border: none;
 
@@ -13,9 +9,12 @@ button {
 }
 
 .app {
+  min-height: 100vh;
+  padding-top: 3rem;
+
   .app-title {
-    margin: 5rem auto 3rem;
-    font-size: 3rem;
+    margin-bottom: 3rem;
+    font-size: 4rem;
     font-weight: 700;
 
     text-transform: uppercase;
@@ -29,7 +28,7 @@ button {
     align-items: top;
 
     .todo-wrap {
-      margin-left: 3rem;
+      width: 100%;
     }
     // end of todo-wrap
   }

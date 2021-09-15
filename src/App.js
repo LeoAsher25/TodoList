@@ -1,14 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 // import components
 import AddTodoBox from "./AddTodoBox";
 import TodoList from "./TodoList";
 import FunctionBtnWrap from "./FunctionBtnWrap";
+import ThemeContextProvider, {
+  ThemeContext,
+} from "./contexts/ThemeContextProvider";
 
 // import scss
 import "./App.scss";
+import { Container } from "react-bootstrap";
 
 function App() {
+  const { theme } = useContext(ThemeContext);
+  const { isLightTheme, ligthTheme, darkTheme } = theme;
+  const style = isLightTheme ? ligthTheme : darkTheme;
+
   const [currentSortType, setCurrentSortType] = useState("");
   const [currentFilterType, setCurrentFilterType] = useState("");
 
@@ -240,41 +248,46 @@ function App() {
   }, [todos.length, currentFilterType]);
 
   return (
-    <div className="app">
-      <h3 className="app-title">To Do List - Team Web D19</h3>
-      <div className="app-content">
-        {addBoxIsOpen ? (
-          <AddTodoBox
-            hidden={!addBoxIsOpen}
-            newTodo={newTodo}
-            isEditting={isEditting}
-            optionLevels={optionLevels}
-            setNewTodo={setNewTodo}
-            setAddBoxIsOpen={setAddBoxIsOpen}
-            handleAddTodoBoxSubmit={handleAddTodoBoxSubmit}
-          />
-        ) : (
-          ""
-        )}
+    <div
+      className="app"
+      style={{ backgroundColor: style.bgColor, color: style.color }}
+    >
+      <Container className="app">
+        <h3 className="app-title">TodoList</h3>
+        <div className="app-content">
+          {addBoxIsOpen ? (
+            <AddTodoBox
+              hidden={!addBoxIsOpen}
+              newTodo={newTodo}
+              isEditting={isEditting}
+              optionLevels={optionLevels}
+              setNewTodo={setNewTodo}
+              setAddBoxIsOpen={setAddBoxIsOpen}
+              handleAddTodoBoxSubmit={handleAddTodoBoxSubmit}
+            />
+          ) : (
+            ""
+          )}
 
-        <div className="todo-wrap">
-          <FunctionBtnWrap
-            sortTypesList={sortTypesList}
-            optionLevels={optionLevels}
-            setAddBoxIsOpen={setAddBoxIsOpen}
-            handleSortFormOnSubmit={handleSortFormOnSubmit}
-            handleFilterFormOnSubmit={handleFilterFormOnSubmit}
-            handleSearchFormOnSubmit={handleSearchFormOnSubmit}
-          />
+          <div className="todo-wrap">
+            <FunctionBtnWrap
+              sortTypesList={sortTypesList}
+              optionLevels={optionLevels}
+              setAddBoxIsOpen={setAddBoxIsOpen}
+              handleSortFormOnSubmit={handleSortFormOnSubmit}
+              handleFilterFormOnSubmit={handleFilterFormOnSubmit}
+              handleSearchFormOnSubmit={handleSearchFormOnSubmit}
+            />
 
-          <TodoList
-            processedTodos={processedTodos}
-            handleRemoveTodo={handleRemoveTodo}
-            handleSetIsEditting={handleSetIsEditting}
-            handleChangeLevel={handleChangeLevel}
-          />
+            <TodoList
+              processedTodos={processedTodos}
+              handleRemoveTodo={handleRemoveTodo}
+              handleSetIsEditting={handleSetIsEditting}
+              handleChangeLevel={handleChangeLevel}
+            />
+          </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

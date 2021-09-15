@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import "./AddTodoBox.scss";
+import { Form } from "react-bootstrap";
+import { ThemeContext } from "../contexts/ThemeContextProvider";
 
 const AddTodoBox = (props) => {
   const {
@@ -11,6 +13,10 @@ const AddTodoBox = (props) => {
     setAddBoxIsOpen,
     handleAddTodoBoxSubmit,
   } = props;
+
+  const { theme } = useContext(ThemeContext);
+  const { isLightTheme, ligthTheme, darkTheme } = theme;
+  const style = isLightTheme ? ligthTheme : darkTheme;
 
   const [inputIsEmpty, setInputIsEmpty] = useState(false);
 
@@ -40,18 +46,21 @@ const AddTodoBox = (props) => {
   };
 
   return (
-    <div className="add-todo-box">
-      <span className="close-box" onClick={() => setAddBoxIsOpen(false)}>
-        &times;
-      </span>
-      <h3 className="heading">
-        {isEditting ? "Edit công việc" : "Thêm công việc mới: "}{" "}
-      </h3>
-
-      <form action="" className="form-wrap">
-        <div className="form-gr">
-          <label htmlFor="todoName">Tên công việc: </label>
-          <input
+    <div
+      className="add-todo-box"
+      style={{ backgroundColor: style.bgColor, color: style.color }}
+    >
+      <Form className="form-wrap">
+        <span className="close-box" onClick={() => setAddBoxIsOpen(false)}>
+          &times;
+        </span>
+        <h3 className="heading">
+          {isEditting ? "Edit công việc" : "Thêm công việc mới: "}{" "}
+        </h3>
+        <Form.Group md="4" className="form-gr" controlId="validationCustom01">
+          <Form.Label htmlFor="todoName">Tên công việc</Form.Label>
+          <Form.Control
+            required
             type="text"
             id="todoName"
             name="name"
@@ -59,34 +68,31 @@ const AddTodoBox = (props) => {
             onChange={(e) => handleOnChange(e)}
             placeholder="nhập công việc"
             autoComplete="off"
+            style={{ backgroundColor: style.bgColor, color: style.color }}
           />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        </Form.Group>
 
-          <span
-            className="input-empty-alert"
-            hidden={!inputIsEmpty}
-            style={{ color: "red", margin: "5px 0 0 15px", fontSize: "12px" }}
-          >
-            Tên công việc không được để trống
-          </span>
-        </div>
-
-        <div className="form-gr">
-          <label htmlFor="todoLevel">Mức độ</label>
-
-          <select
+        <Form.Group className="form-gr">
+          <Form.Label htmlFor="todoLevel">Mức độ</Form.Label>
+          <Form.Select
+            aria-label="Default select example"
             id="todoLevel"
             name="level"
             value={JSON.stringify(newTodo.level)}
             onChange={(e) => handleOnChange(e)}
+            style={{ backgroundColor: style.bgColor, color: style.color }}
           >
             {optionLevels.map((option, index) => (
               <option key={index} value={JSON.stringify(option)}>
                 {option.titleLevel}{" "}
               </option>
             ))}
-          </select>
-        </div>
+          </Form.Select>
+        </Form.Group>
+      </Form>
 
+      <Form action="" className="form-wrap">
         <div className="btn-wrap">
           <button type="submit" onClick={(e) => handleFormSubmit(e)}>
             {!isEditting ? "Thêm" : "Save"}
@@ -100,7 +106,7 @@ const AddTodoBox = (props) => {
             Hủy bỏ
           </button>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };

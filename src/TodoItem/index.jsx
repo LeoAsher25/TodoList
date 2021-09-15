@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Badge } from "react-bootstrap";
 
 const TodoItem = (props) => {
   const {
@@ -10,12 +11,32 @@ const TodoItem = (props) => {
     handleChangeLevel,
   } = props;
 
+  const getBgColor = (titleLevel) => {
+    switch (titleLevel) {
+      case "Không làm không sao":
+        return "success";
+
+      case "Phải làm":
+        return "warning";
+
+      case "Làm ngay":
+        return "danger";
+    }
+  };
+
   return (
     <tr className="todo-item">
-      <td>{indexOfTodo + 1}</td>
-      <td>{todo.name}</td>
+      <td>
+        <span>{indexOfTodo + 1}</span>
+      </td>
+      <td>
+        <span>{todo.name}</span>
+      </td>
       <td className="level-box">
-        <span>{todo.level.titleLevel}</span>
+        <Badge bg={getBgColor(todo.level.titleLevel)}>
+          {todo.level.titleLevel}
+        </Badge>
+
         <div className="change-level">
           <span
             onClick={() => handleChangeLevel("Decrease", todo, indexOfTodo)}

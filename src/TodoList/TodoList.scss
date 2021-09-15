@@ -1,39 +1,48 @@
 .todo-list {
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  // box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
   font-size: 1.5rem;
-  background-color: #fff;
-
-  * {
-    text-align: center;
-  }
+  width: 100%;
 
   table {
-    border-collapse: collapse;
+    width: 100%;
 
     th {
       padding: 1rem;
       font-weight: 700;
+      border: none;
     }
 
-    tr td:nth-child(2),
-    tr td:nth-child(3) {
-      text-align: left;
-      padding-left: 2rem;
-      padding-right: 2rem;
+    tr {
+      width: 100%;
+
+      th:first-child,
+      td:first-child {
+        text-align: center;
+      }
+
+      td:nth-child(2) {
+        text-align: left;
+        padding-left: 1rem;
+        padding-right: 2rem;
+      }
+    }
+    td {
+      font-size: 1.6rem;
+      line-height: 1.6rem;
+      vertical-align: middle;
+      border: none;
     }
   }
 
   .action-wrap {
     button {
       padding: 0.5rem 1.8rem;
-      margin: 0.8rem auto;
-      border-radius: 1rem;
+      border-radius: 0.3rem;
       text-transform: uppercase;
 
       cursor: pointer;
       font-size: 1.1rem;
       font-weight: 700;
-      color: #fff;
 
       &:first-child {
         background-color: #d7b439;
@@ -63,9 +72,9 @@
 
     span {
       cursor: pointer;
-      background-color: #fff;
       border: 1px solid;
       opacity: 0.5;
+      text-align: center;
 
       width: 1.6rem;
       height: 1.2rem;
