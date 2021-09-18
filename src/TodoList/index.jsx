@@ -9,6 +9,7 @@ const TodoList = (props) => {
   // const { todos, setTodos, handleSetIsEditting, optionLevels } = props;
   const {
     processedTodos,
+    optionLevels,
     handleRemoveTodo,
     handleSetIsEditting,
     handleChangeLevel,
@@ -27,10 +28,10 @@ const TodoList = (props) => {
       >
         <thead>
           <tr className="table-header">
-            <th width="30" >STT</th>
-            <th width="250" >Tên công việc</th>
-            <th width="250" >Mức độ</th>
-            <th width="250" >Hành động</th>
+            <th width="30">STT</th>
+            <th width="250">Tên công việc</th>
+            <th width="250">Mức độ</th>
+            <th width="250">Hành động</th>
           </tr>
         </thead>
 
@@ -40,6 +41,7 @@ const TodoList = (props) => {
               key={todo.id}
               todo={todo}
               indexOfTodo={index}
+              optionLevels={optionLevels}
               handleRemoveTodo={handleRemoveTodo}
               handleSetIsEditting={handleSetIsEditting}
               handleChangeLevel={handleChangeLevel}

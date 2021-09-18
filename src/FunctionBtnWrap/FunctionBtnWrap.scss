@@ -4,8 +4,10 @@
 
   .row {
     display: flex;
+    align-items: center;
 
     .col {
+      margin-top: 1rem;
       @media (max-width: 576px) {
         & {
           padding: 0 3rem;
@@ -14,13 +16,30 @@
     }
 
     button {
-      vertical-align: middle;
       font-size: 1.6rem;
-      padding: 0.4rem 1.2rem;
+      padding: 0.8rem 1.2rem;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+
+      @media (min-width: 576px) and (max-width: 768px) {
+        padding: 0.8rem 0.5rem;
+      }
 
       i {
         margin: 0.5rem;
       }
+    }
+
+    button.add-new-todo-btn {
+      background-color: #25aa5a;
+    }
+    button[type="submit"] {
+      padding-left: 1.2rem;
+      padding-right: 1.2rem;
+      min-width: 8rem;
+      border-top-right-radius: unset;
+      border-bottom-right-radius: unset;
     }
 
     .sort-todos-form,
@@ -50,47 +69,22 @@
       }
     }
 
+    input,
+    select {
+      border-top-left-radius: unset;
+      border-bottom-left-radius: unset;
+    }
+
     .button-wrap {
       display: flex;
       align-items: center;
       justify-content: space-between;
-
-      .toggle-theme {
-        position: relative;
-        width: 5rem;
-        height: 3rem;
-
-        $height: 3rem;
-        border-radius: 10rem;
-
-        cursor: pointer;
-        box-shadow: inset 0 0 0.5rem rgba(0, 0, 0, 0.5);
-        // inset 0 0 0.5rem rgba(255, 255, 255, 0.3);
-        .circle {
-          position: absolute;
-          left: 0;
-          transform: translateX(0);
-
-          transition: 0.5s;
-
-          height: 3rem;
-          width: 3rem;
-
-          border: 0.1rem solid #999;
-          box-shadow: inset 0 0 1rem rgba(0, 0, 0, 0.5);
-          border-radius: 50%;
-
-          user-select: none;
-
-          &.active {
-            // transform: translateX(50%);
-            left: 40%;
-          }
-        }
-      }
     }
   }
 
+  // .row:nth-child(2) {
+
+  // }
   // end of .row1, .row2
 }
 // end of .function-btn-wrap

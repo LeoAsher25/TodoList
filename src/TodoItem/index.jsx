@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Badge } from "react-bootstrap";
 
@@ -6,23 +6,22 @@ const TodoItem = (props) => {
   const {
     todo,
     indexOfTodo,
+    optionLevels,
     handleRemoveTodo,
     handleSetIsEditting,
     handleChangeLevel,
   } = props;
 
-  const getBgColor = (titleLevel) => {
-    switch (titleLevel) {
-      case "Không làm không sao":
-        return "success";
+  const [disableUpLevel, setUpLevel] = useState(0.8);
+  const [disableDownLevel, setDownLevel] = useState(0.8);
 
-      case "Phải làm":
-        return "warning";
-
-      case "Làm ngay":
-        return "danger";
-    }
-  };
+  useEffect(() => {
+    const index = optionLevels.findIndex(
+      (item) => item.titleLevel === todo.level.titleLevel
+    );
+    setUpLevel(index === optionLevels.length - 1 ? 0.2 : 0.8);
+    setDownLevel(index === 0 ? 0.2 : 0.8);
+  }, []);
 
   return (
     <tr className="todo-item">
@@ -33,18 +32,22 @@ const TodoItem = (props) => {
         <span>{todo.name}</span>
       </td>
       <td className="level-box">
-        <Badge bg={getBgColor(todo.level.titleLevel)}>
-          {todo.level.titleLevel}
-        </Badge>
+        <Badge bg={todo.level.bgColor}>{todo.level.titleLevel}</Badge>
 
         <div className="change-level">
           <span
-            onClick={() => handleChangeLevel("Decrease", todo, indexOfTodo)}
+            style={{ opacity: disableUpLevel }}
+            onClick={() =>
+              handleChangeLevel("Increase", todo, setUpLevel, setDownLevel)
+            }
           >
             <i className="fas fa-chevron-up"></i>
           </span>
           <span
-            onClick={() => handleChangeLevel("Increase", todo, indexOfTodo)}
+            style={{ opacity: disableDownLevel }}
+            onClick={() =>
+              handleChangeLevel("Decrease", todo, setUpLevel, setDownLevel)
+            }
           >
             <i className="fas fa-chevron-down"></i>
           </span>
@@ -52,13 +55,13 @@ const TodoItem = (props) => {
       </td>
       <td className="action-wrap ">
         <button className="edit-todo" onClick={() => handleSetIsEditting(todo)}>
-          Sửa
+          <span>Sửa</span>
         </button>
         <button
           className="remove-todo"
-          onClick={(e) => handleRemoveTodo(todo.id)}
+          onClick={() => handleRemoveTodo(todo.id)}
         >
-          Xóa
+          <span>Xóa</span>
         </button>
       </td>
     </tr>

@@ -10,14 +10,15 @@ button {
 
 .app {
   min-height: 100vh;
-  padding-top: 3rem;
+  user-select: none;
 
   .app-title {
+    padding-top: 10rem;
     margin-bottom: 3rem;
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 700;
 
-    text-transform: uppercase;
+    // text-transform: uppercase;
     text-align: center;
   }
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import "./AddTodoBox.scss";
 import { Form } from "react-bootstrap";
@@ -18,7 +18,7 @@ const AddTodoBox = (props) => {
   const { isLightTheme, ligthTheme, darkTheme } = theme;
   const style = isLightTheme ? ligthTheme : darkTheme;
 
-  const [inputIsEmpty, setInputIsEmpty] = useState(false);
+  // const [inputIsEmpty, setInputIsEmpty] = useState(false);
 
   // handle when form submitted
   const handleFormSubmit = (e) => {
@@ -28,16 +28,16 @@ const AddTodoBox = (props) => {
       handleAddTodoBoxSubmit();
 
       setAddBoxIsOpen(false);
-      setInputIsEmpty(false);
+      // setInputIsEmpty(false);
     } else {
-      setInputIsEmpty(true);
+      // setInputIsEmpty(true);
     }
   };
 
   // handle when input or select ele change
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    setInputIsEmpty(false);
+    // setInputIsEmpty(false);
 
     setNewTodo({
       ...newTodo,
@@ -57,7 +57,7 @@ const AddTodoBox = (props) => {
         <h3 className="heading">
           {isEditting ? "Edit công việc" : "Thêm công việc mới: "}{" "}
         </h3>
-        <Form.Group md="4" className="form-gr" controlId="validationCustom01">
+        <Form.Group md="4" className="form-gr">
           <Form.Label htmlFor="todoName">Tên công việc</Form.Label>
           <Form.Control
             required

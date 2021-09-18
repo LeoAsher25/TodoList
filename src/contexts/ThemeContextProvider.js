@@ -6,7 +6,7 @@ const ThemeContextProvider = (props) => {
   const [theme, setTheme] = useState({
     isLightTheme: true,
     ligthTheme: {
-      bgColor: "#fafafa",
+      bgColor: "#fefefe",
       color: "#111",
     },
     darkTheme: {
@@ -17,7 +17,7 @@ const ThemeContextProvider = (props) => {
 
   useEffect(() => {
     let localTheme = localStorage.getItem("Theme");
-    if (localStorage) {
+    if (localTheme) {
       setTheme(JSON.parse(localTheme));
     }
   }, []);

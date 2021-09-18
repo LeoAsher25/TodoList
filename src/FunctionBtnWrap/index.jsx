@@ -1,9 +1,10 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import "./FunctionBtnWrap.scss";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { ThemeContext } from "../contexts/ThemeContextProvider";
+import ToggleThemeBtn from "../ToggleThemeBtn";
 
 const FunctionBtnWrap = (props) => {
   const {
@@ -19,6 +20,8 @@ const FunctionBtnWrap = (props) => {
   const { isLightTheme, ligthTheme, darkTheme } = theme;
   const style = isLightTheme ? ligthTheme : darkTheme;
 
+  const bgColorBtn = isLightTheme ? "#83D8FF" : "#749DD6";
+
   // declare DOM ref
   const selectSortRef = useRef(null);
   const selectFilterRef = useRef(null);
@@ -31,17 +34,10 @@ const FunctionBtnWrap = (props) => {
     console.log(searchInputRef.current.value);
   };
 
-  const handleToggleTheme = (e) => {
-    const circleToggle = e.target;
-    circleToggle.classList.toggle("active");
-    console.log(circleToggle);
-    toggleTheme();
-  };
-
   return (
     <div className="function-btn-wrap">
       {/* row1 */}
-      <Row className="mb-4">
+      <Row className="">
         <Col xs="12" sm="6" className="col">
           <div className="button-wrap">
             <Button
@@ -52,12 +48,11 @@ const FunctionBtnWrap = (props) => {
               Thêm công việc mới
             </Button>
 
-            <div className="toggle-theme">
-              <div
-                className="circle"
-                onClick={(e) => handleToggleTheme(e)}
-              ></div>
-            </div>
+            <ToggleThemeBtn
+              toggleTheme={toggleTheme}
+              isLightTheme={isLightTheme}
+              bgColorBtn={bgColorBtn}
+            />
           </div>
         </Col>
 
@@ -66,7 +61,7 @@ const FunctionBtnWrap = (props) => {
             className="search-form"
             onSubmit={(e) => handleSearchInputSubmit(e)}
           >
-            <Button type="submit">
+            <Button style={{ backgroundColor: bgColorBtn }} type="submit">
               <i className="fas fa-search"></i>
             </Button>
             <Form.Control
@@ -91,7 +86,11 @@ const FunctionBtnWrap = (props) => {
               handleSortFormOnSubmit(e, selectSortRef.current.value)
             }
           >
-            <Button variant="info" type="submit">
+            <Button
+              style={{ backgroundColor: bgColorBtn }}
+              variant="info"
+              type="submit"
+            >
               Sort
             </Button>
             <Form.Select
@@ -121,7 +120,11 @@ const FunctionBtnWrap = (props) => {
               handleFilterFormOnSubmit(e, selectFilterRef.current.value)
             }
           >
-            <Button variant="info" type="submit">
+            <Button
+              style={{ backgroundColor: bgColorBtn }}
+              variant="info"
+              type="submit"
+            >
               Filter
             </Button>
             <Form.Select
@@ -131,7 +134,7 @@ const FunctionBtnWrap = (props) => {
               id="sortTodos"
               className="filter-todos-wrap"
             >
-              <option default>Filter type</option>
+              <option default>Filter level</option>
               <option value="all">All</option>
               {optionLevels.map((filterType, index) => (
                 <option key={index} value={filterType.titleLevel}>

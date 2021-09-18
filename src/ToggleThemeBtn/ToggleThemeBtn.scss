@@ -1,0 +1,155 @@
+// toggle theme
+.toggle {
+  $height: 4rem;
+  $spaceTop: 0.3rem;
+  cursor: pointer;
+  position: relative;
+
+  width: 7rem;
+  height: $height;
+  border-radius: $height - 0.6rem;
+  transition: background-color 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+
+  .toggle__handler {
+    position: relative;
+    z-index: 1;
+    top: $spaceTop;
+    left: $spaceTop;
+
+    width: $height - 0.6rem;
+    height: $height - 0.6rem;
+    border-radius: $height;
+
+    background-color: #fde8a1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    .crater {
+      position: absolute;
+      background-color: #f0d5ad;
+      opacity: 0;
+      transition: opacity 200ms ease-in-out;
+      border-radius: 50%;
+    }
+
+    .crater--1 {
+      top: 45%;
+      left: 25%;
+      width: 12%;
+      height: 12%;
+    }
+
+    .crater--2 {
+      top: 72%;
+      left: 50%;
+      width: 15%;
+      height: 15%;
+    }
+
+    .crater--3 {
+      top: 25%;
+      left: 60%;
+      width: 20%;
+      height: 20%;
+    }
+  }
+
+  .star {
+    position: absolute;
+    background-color: #ffffff;
+    transition: all 300ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    border-radius: 50%;
+  }
+
+  .star--1 {
+    top: 0.8rem;
+    left: 2.6rem;
+    z-index: 0;
+    width: 3rem;
+    height: 0.3rem;
+  }
+
+  .star--2 {
+    top: 1.6rem;
+    left: 2.4rem;
+    z-index: 1;
+    width: 3rem;
+    height: 0.3rem;
+  }
+
+  .star--3 {
+    top: 2.5rem;
+    left: 3rem;
+    z-index: 0;
+    width: 30px;
+    height: 3px;
+  }
+
+  .star--4,
+  .star--5,
+  .star--6 {
+    opacity: 0;
+  }
+
+  .star--4 {
+    top: 1.2rem;
+    left: 11px;
+    z-index: 0;
+    width: 2px;
+    height: 2px;
+    transform: translate3d(3px, 0, 0);
+  }
+
+  .star--5 {
+    top: 2.5rem;
+    left: 1rem;
+    z-index: 0;
+    width: 3px;
+    height: 3px;
+    transform: translate3d(3px, 0, 0);
+  }
+
+  .star--6 {
+    top: 3rem;
+    left: 28px;
+    z-index: 0;
+    width: 2px;
+    height: 2px;
+    transform: translate3d(3px, 0, 0);
+  }
+
+  &.active {
+    .toggle__handler {
+      transform: translate3d(3rem, 0, 0) rotate(0);
+
+      .crater {
+        opacity: 1;
+      }
+    }
+
+    .star--1 {
+      width: 2px;
+      height: 2px;
+    }
+
+    .star--2 {
+      width: 4px;
+      height: 4px;
+      transform: translate3d(-5px, 0, 0);
+    }
+
+    .star--3 {
+      width: 2px;
+      height: 2px;
+      transform: translate3d(-7px, 0, 0);
+    }
+
+    .star--4,
+    .star--5,
+    .star--6 {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
+// end of .toggle

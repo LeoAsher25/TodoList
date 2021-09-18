@@ -1,12 +1,11 @@
 import { useEffect, useState, useContext } from "react";
+import { v1 as uuidv1 } from "uuid";
 
 // import components
 import AddTodoBox from "./AddTodoBox";
 import TodoList from "./TodoList";
 import FunctionBtnWrap from "./FunctionBtnWrap";
-import ThemeContextProvider, {
-  ThemeContext,
-} from "./contexts/ThemeContextProvider";
+import { ThemeContext } from "./contexts/ThemeContextProvider";
 
 // import scss
 import "./App.scss";
@@ -31,32 +30,33 @@ function App() {
     {
       titleLevel: "Không làm không sao",
       orderLevel: 3,
+      bgColor: "success",
     },
     {
       titleLevel: "Phải làm",
       orderLevel: 2,
+      bgColor: "warning",
     },
     {
       titleLevel: "Làm ngay",
       orderLevel: 1,
+      bgColor: "danger",
     },
   ];
 
   const [todos, setTodos] = useState([]);
+  const [processedTodos, setProcessedTodos] = useState(todos);
 
   useEffect(() => {
-    let localTodos = localStorage.getItem("todos");
-    if (localStorage) {
+    const localTodos = localStorage.getItem("todos");
+    if (localTodos) {
       setTodos(JSON.parse(localTodos));
     }
   }, []);
-  
+
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos.length]);
-
-
-  const [processedTodos, setProcessedTodos] = useState(todos);
+  }, [todos]);
 
   const [newTodo, setNewTodo] = useState({
     id: 0,
@@ -75,20 +75,25 @@ function App() {
   const handleAddTodoBoxSubmit = () => {
     if (isEditting) {
       const tmpTodos = [...todos];
-      const index = processedTodos.findIndex((todo) => todo.id === newTodo.id);
+      const index = todos.findIndex((todo) => todo.id === newTodo.id);
       tmpTodos.splice(index, 1, newTodo);
 
+      setTodos(sorting(filtering(tmpTodos)));
       setProcessedTodos([...tmpTodos]);
       setIsEditting(false);
     } else {
-      newTodo.id = todos.length + 1;
+      newTodo.id = uuidv1();
       setTodos([...todos, newTodo]);
+      setProcessedTodos([...todos, newTodo]);
     }
+
     setNewTodo({
       id: 0,
       name: "",
       level: optionLevels[0],
     });
+
+    localStorage.setItem("todos", JSON.stringify(todos));
   };
 
   // handle when click "Sửa" button of todoItem in table todolist
@@ -108,7 +113,6 @@ function App() {
   const handleSortFormOnSubmit = (e, sortType) => {
     e.preventDefault();
     setCurrentSortType(sortType);
-
     // sorting();
   };
 
@@ -117,7 +121,6 @@ function App() {
   const handleFilterFormOnSubmit = (e, filterType) => {
     e.preventDefault();
     setCurrentFilterType(filterType);
-    filtering();
   };
 
   const handleSearchFormOnSubmit = (searchTerm) => {
@@ -137,8 +140,8 @@ function App() {
   };
 
   // handle sorting,
-  function sorting() {
-    const tmpTodos = [...processedTodos];
+  function sorting(Todos) {
+    const tmpTodos = [...Todos];
     switch (currentSortType) {
       case "Tên: a-z":
         tmpTodos.sort((t1, t2) => {
@@ -179,25 +182,26 @@ function App() {
       default:
         break;
     }
-
-    setProcessedTodos(tmpTodos);
+    // setProcessedTodos([...tmpTodos]);
+    return tmpTodos;
   }
 
   // handle filtering
-  function filtering() {
+  function filtering(Todos) {
     let tmpTodos = [];
     if (
       optionLevels.findIndex(
         (level) => level.titleLevel === currentFilterType
       ) !== -1
     ) {
-      tmpTodos = todos.filter(
+      tmpTodos = Todos.filter(
         (todo) => todo.level.titleLevel === currentFilterType
       );
     } else {
-      tmpTodos = [...todos];
+      tmpTodos = [...Todos];
     }
-    setProcessedTodos(tmpTodos);
+    // setProcessedTodos(tmpTodos);
+    return tmpTodos;
   }
 
   // handle to remove the selected todo when click "Xóa" btn in TodoItem
@@ -208,21 +212,34 @@ function App() {
 
   // handle change level of todo when click on level box in table
   // take three params: changeType, todo, index
-  const handleChangeLevel = (changeType, todo, index) => {
+  const handleChangeLevel = (changeType, todo, setUpLevel, setDownLevel) => {
     let indexInOptionLevels = optionLevels.findIndex(
       (item) => item.titleLevel === todo.level.titleLevel
     );
+
     switch (changeType) {
       case "Decrease":
-        if (indexInOptionLevels === optionLevels.length - 1) {
-          indexInOptionLevels = 0;
+        setUpLevel(0.8);
+        if (indexInOptionLevels === 0) {
+          setDownLevel(0.2);
+        } else if (indexInOptionLevels === 1) {
+          setDownLevel(0.2);
+          indexInOptionLevels -= 1;
         } else {
-          indexInOptionLevels += 1;
+          indexInOptionLevels -= 1;
         }
         break;
 
       case "Increase":
-        indexInOptionLevels = (indexInOptionLevels + 1) % optionLevels.length;
+        setDownLevel(0.8);
+        if (indexInOptionLevels === optionLevels.length - 1) {
+          setUpLevel(0.2);
+        } else if (indexInOptionLevels === optionLevels.length - 2) {
+          setUpLevel(0.2);
+          indexInOptionLevels += 1;
+        } else {
+          indexInOptionLevels += 1;
+        }
         break;
 
       default:
@@ -231,17 +248,21 @@ function App() {
 
     todo.level = optionLevels[indexInOptionLevels];
     const tmpTodos = [...todos];
+    const index = todos.findIndex((item) => item.id === todo.id);
     tmpTodos.splice(index, 1, todo);
-    setTodos([...tmpTodos]);
+    setTodos(sorting(filtering(tmpTodos)));
   };
 
+  // useEffect(() => {
+  //   setProcessedTodos(filtering(todos));
+  // }, [todos.length, currentFilterType]);
   useEffect(() => {
-    sorting();
-  }, [todos.length, currentSortType]);
+    setProcessedTodos(todos);
+  }, [todos]);
 
   useEffect(() => {
-    filtering();
-  }, [todos.length, currentFilterType]);
+    setProcessedTodos(sorting(filtering(todos)));
+  }, [todos.length, currentSortType, currentFilterType]);
 
   return (
     <div
@@ -249,7 +270,7 @@ function App() {
       style={{ backgroundColor: style.bgColor, color: style.color }}
     >
       <Container className="app">
-        <h3 className="app-title">TodoList</h3>
+        <h3 className="app-title">La's TASK</h3>
         <div className="app-content">
           {addBoxIsOpen ? (
             <AddTodoBox
@@ -277,6 +298,7 @@ function App() {
 
             <TodoList
               processedTodos={processedTodos}
+              optionLevels={optionLevels}
               handleRemoveTodo={handleRemoveTodo}
               handleSetIsEditting={handleSetIsEditting}
               handleChangeLevel={handleChangeLevel}
