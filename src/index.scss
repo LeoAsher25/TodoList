@@ -2,6 +2,10 @@
 
 html {
   font-size: 62.5%;
+  overflow: overlay;
+}
+body {
+  // overflow: overlay;
 }
 
 * {
@@ -12,4 +16,18 @@ html {
   background-color: inherit;
   color: inherit;
   font-family: "Nunito", sans-serif;
+}
+::-webkit-scrollbar {
+  width: 1.2rem;
+}
+
+::-webkit-scrollbar-track {
+  // width: 50%;
+  // background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 100%;
+  background: linear-gradient(to top, #83d8ff, #749dd6);
+  border-radius: 2rem;
 }

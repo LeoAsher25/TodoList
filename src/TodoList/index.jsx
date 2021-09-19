@@ -24,14 +24,14 @@ const TodoList = (props) => {
       {/* <table border="1" cellPadding="0" cellSpacing="0"> */}
       <Table
         bordered
-        style={{ backgroundColor: style.bgColor, color: style.color }}
+        style={{ backgroundColor: style.bgColor, color: style.color, borderColor: "#aaa" }}
       >
         <thead>
           <tr className="table-header">
-            <th width="30">STT</th>
+            <th width="20">STT</th>
             <th width="250">Tên công việc</th>
             <th width="250">Mức độ</th>
-            <th width="250">Hành động</th>
+            <th width="200">Hành động</th>
           </tr>
         </thead>
 

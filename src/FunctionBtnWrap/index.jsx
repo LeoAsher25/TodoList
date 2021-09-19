@@ -70,6 +70,7 @@ const FunctionBtnWrap = (props) => {
               type="text"
               name="search"
               placeholder="Search level"
+              autoComplete="off"
             />
           </Form>
         </Col>

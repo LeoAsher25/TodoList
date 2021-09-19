@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import "./AddTodoBox.scss";
 import { Form } from "react-bootstrap";
@@ -8,6 +8,7 @@ const AddTodoBox = (props) => {
   const {
     newTodo,
     isEditting,
+    setIsEditting,
     optionLevels,
     setNewTodo,
     setAddBoxIsOpen,
@@ -45,13 +46,41 @@ const AddTodoBox = (props) => {
     });
   };
 
+  const handleCloseBox = (e) => {
+    e.preventDefault();
+    setAddBoxIsOpen(false);
+    setIsEditting(false);
+    setNewTodo({
+      id: 0,
+      name: "",
+      level: optionLevels[0],
+    });
+  };
+
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+
   return (
     <div
       className="add-todo-box"
       style={{ backgroundColor: style.bgColor, color: style.color }}
     >
-      <Form className="form-wrap">
-        <span className="close-box" onClick={() => setAddBoxIsOpen(false)}>
+      <Form
+        noValidate
+        className="form-wrap"
+        validated={validated}
+        onSubmit={handleSubmit}
+      >
+        <span className="close-box" onClick={(e) => handleCloseBox(e)}>
           &times;
         </span>
         <h3 className="heading">
@@ -92,21 +121,20 @@ const AddTodoBox = (props) => {
         </Form.Group>
       </Form>
 
-      <Form action="" className="form-wrap">
+      {/* <Form action="" className="form-wrap"> */}
         <div className="btn-wrap">
           <button type="submit" onClick={(e) => handleFormSubmit(e)}>
             {!isEditting ? "Thêm" : "Save"}
           </button>
           <button
             onClick={(e) => {
-              e.preventDefault();
-              return setAddBoxIsOpen(false);
+              return handleCloseBox(e);
             }}
           >
             Hủy bỏ
           </button>
         </div>
-      </Form>
+      {/* </Form> */}
     </div>
   );
 };

@@ -51,12 +51,15 @@ function App() {
     const localTodos = localStorage.getItem("todos");
     if (localTodos) {
       setTodos(JSON.parse(localTodos));
+      // setProcessedTodos(JSON.parse(localTodos));
     }
+    console.log("ajojo", todos);
   }, []);
 
   useEffect(() => {
+    console.log("save", todos);
     localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+  }, [todos.length]);
 
   const [newTodo, setNewTodo] = useState({
     id: 0,
@@ -113,7 +116,6 @@ function App() {
   const handleSortFormOnSubmit = (e, sortType) => {
     e.preventDefault();
     setCurrentSortType(sortType);
-    // sorting();
   };
 
   // handle when click on "Filter" button in FunctionBtnWrap
@@ -135,8 +137,7 @@ function App() {
         searchedTodos.push(todo);
       }
     });
-
-    setProcessedTodos(searchedTodos);
+    setProcessedTodos(sorting(filtering(searchedTodos)));
   };
 
   // handle sorting,
@@ -250,19 +251,16 @@ function App() {
     const tmpTodos = [...todos];
     const index = todos.findIndex((item) => item.id === todo.id);
     tmpTodos.splice(index, 1, todo);
-    setTodos(sorting(filtering(tmpTodos)));
+    setProcessedTodos(sorting(filtering(tmpTodos)));
   };
 
-  // useEffect(() => {
-  //   setProcessedTodos(filtering(todos));
-  // }, [todos.length, currentFilterType]);
   useEffect(() => {
-    setProcessedTodos(todos);
-  }, [todos]);
+    setProcessedTodos([...filtering(todos)]);
+  }, [todos.length, currentFilterType]);
 
   useEffect(() => {
-    setProcessedTodos(sorting(filtering(todos)));
-  }, [todos.length, currentSortType, currentFilterType]);
+    setProcessedTodos(sorting(todos));
+  }, [todos.length, currentSortType]);
 
   return (
     <div
@@ -270,13 +268,14 @@ function App() {
       style={{ backgroundColor: style.bgColor, color: style.color }}
     >
       <Container className="app">
-        <h3 className="app-title">La's TASK</h3>
+        <h3 className="app-title">LA's Task</h3>
         <div className="app-content">
           {addBoxIsOpen ? (
             <AddTodoBox
               hidden={!addBoxIsOpen}
               newTodo={newTodo}
               isEditting={isEditting}
+              setIsEditting={setIsEditting}
               optionLevels={optionLevels}
               setNewTodo={setNewTodo}
               setAddBoxIsOpen={setAddBoxIsOpen}
