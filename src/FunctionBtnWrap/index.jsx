@@ -31,7 +31,6 @@ const FunctionBtnWrap = (props) => {
     e.preventDefault();
     handleSearchFormOnSubmit(searchInputRef.current.value);
     searchInputRef.current.value = "";
-    console.log(searchInputRef.current.value);
   };
 
   return (

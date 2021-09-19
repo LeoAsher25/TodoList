@@ -19,7 +19,7 @@ const AddTodoBox = (props) => {
   const { isLightTheme, ligthTheme, darkTheme } = theme;
   const style = isLightTheme ? ligthTheme : darkTheme;
 
-  // const [inputIsEmpty, setInputIsEmpty] = useState(false);
+  const [inputIsEmpty, setInputIsEmpty] = useState(false);
 
   // handle when form submitted
   const handleFormSubmit = (e) => {
@@ -29,16 +29,16 @@ const AddTodoBox = (props) => {
       handleAddTodoBoxSubmit();
 
       setAddBoxIsOpen(false);
-      // setInputIsEmpty(false);
+      setInputIsEmpty(false);
     } else {
-      // setInputIsEmpty(true);
+      setInputIsEmpty(true);
     }
   };
 
   // handle when input or select ele change
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    // setInputIsEmpty(false);
+    setInputIsEmpty(false);
 
     setNewTodo({
       ...newTodo,
@@ -95,11 +95,15 @@ const AddTodoBox = (props) => {
             name="name"
             value={newTodo.name}
             onChange={(e) => handleOnChange(e)}
-            placeholder="nhập công việc"
+            placeholder="Nhập công việc"
             autoComplete="off"
             style={{ backgroundColor: style.bgColor, color: style.color }}
           />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          {inputIsEmpty ? (
+            <div className="input-empty-alert">Looks good!</div>
+          ) : (
+            ""
+          )}
         </Form.Group>
 
         <Form.Group className="form-gr">
@@ -122,18 +126,18 @@ const AddTodoBox = (props) => {
       </Form>
 
       {/* <Form action="" className="form-wrap"> */}
-        <div className="btn-wrap">
-          <button type="submit" onClick={(e) => handleFormSubmit(e)}>
-            {!isEditting ? "Thêm" : "Save"}
-          </button>
-          <button
-            onClick={(e) => {
-              return handleCloseBox(e);
-            }}
-          >
-            Hủy bỏ
-          </button>
-        </div>
+      <div className="btn-wrap">
+        <button type="submit" onClick={(e) => handleFormSubmit(e)}>
+          {!isEditting ? "Thêm" : "Save"}
+        </button>
+        <button
+          onClick={(e) => {
+            return handleCloseBox(e);
+          }}
+        >
+          Hủy bỏ
+        </button>
+      </div>
       {/* </Form> */}
     </div>
   );

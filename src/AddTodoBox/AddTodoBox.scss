@@ -69,7 +69,12 @@
 
       .input-empty-alert {
         position: absolute;
-        bottom: 0;
+        color: red;
+        bottom: -0.6rem;
+        left: 1.5rem;
+
+        font-size: 1.1rem;
+        line-height: 1.1rem;
       }
     }
     // end of form-gr

@@ -51,15 +51,12 @@ function App() {
     const localTodos = localStorage.getItem("todos");
     if (localTodos) {
       setTodos(JSON.parse(localTodos));
-      // setProcessedTodos(JSON.parse(localTodos));
     }
-    console.log("ajojo", todos);
   }, []);
 
   useEffect(() => {
-    console.log("save", todos);
     localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos.length]);
+  }, [todos]);
 
   const [newTodo, setNewTodo] = useState({
     id: 0,
@@ -95,8 +92,6 @@ function App() {
       name: "",
       level: optionLevels[0],
     });
-
-    localStorage.setItem("todos", JSON.stringify(todos));
   };
 
   // handle when click "Sửa" button of todoItem in table todolist
