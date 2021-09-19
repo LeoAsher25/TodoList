@@ -1,110 +1,127 @@
-.add-todo-box {
-  position: absolute;
-  overflow: hidden;
-  z-index: 10;
-  left: 10%;
+.add-todo-wrap {
+  .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 
-  padding: 2rem;
-  width: 35rem;
-  height: 28rem;
-
-  border-radius: 1rem;
-  border: 1px solid #aaa;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
-
-  .close-box {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-
-    font-size: 3.5rem;
-    font-weight: 700;
-    line-height: 2rem;
     cursor: pointer;
-  }
-  // end of .close-box
-
-  .heading {
-    font-size: 2rem;
-    font-weight: 700;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.4);
   }
 
-  .form-wrap {
-    display: flex;
-    flex-direction: column;
-    // align-items: center;
+  .add-todo-box {
+    position: absolute;
+    overflow: hidden;
+    z-index: 10;
+    left: 10%;
+    z-index: 5;
 
-    .form-gr {
+    padding: 2rem;
+    width: 35rem;
+    height: 28rem;
+
+    border-radius: 1rem;
+    border: 1px solid #aaa;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+
+    .close-box {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 2rem;
+      cursor: pointer;
+    }
+    // end of .close-box
+
+    .heading {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .form-wrap {
       display: flex;
       flex-direction: column;
       position: relative;
+      z-index: 1;
+      // align-items: center;
+
+      .form-gr {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin-top: 1rem;
+        padding-bottom: 1rem;
+
+        &:first-child {
+          padding-bottom: 2rem;
+        }
+
+        label {
+          margin-bottom: 0.5rem;
+          font-size: 1.4rem;
+          font-weight: 700;
+        }
+
+        input,
+        select {
+          font-size: 1.4rem;
+          padding: 0.5rem 1.5rem;
+          border: 1px solid #aaa;
+        }
+
+        input {
+          border-radius: 1rem;
+          outline: none;
+        }
+        select {
+          border-radius: 0.5rem;
+        }
+
+        .input-empty-alert {
+          position: absolute;
+          color: red;
+          bottom: -0.6rem;
+          left: 1.5rem;
+
+          font-size: 1.1rem;
+          line-height: 1.1rem;
+        }
+      }
+      // end of form-gr
+    }
+    // end of .form-wrap
+
+    .btn-wrap {
+      display: flex;
+      justify-content: space-around;
       margin-top: 1rem;
-      padding-bottom: 1rem;
 
-      &:first-child {
-        padding-bottom: 2rem;
-      }
+      font-size: 1.4rem;
 
-      label {
-        margin-bottom: 0.5rem;
-        font-size: 1.4rem;
-        font-weight: 700;
-      }
+      button {
+        width: 10rem;
+        height: 3.6rem;
+        border-radius: 0.8rem;
+        cursor: pointer;
 
-      input,
-      select {
-        font-size: 1.4rem;
-        padding: 0.5rem 1.5rem;
-        border: 1px solid #aaa;
-      }
+        text-transform: uppercase;
+        font-weight: 600;
 
-      input {
-        border-radius: 1rem;
-        outline: none;
-      }
-      select {
-        border-radius: 0.5rem;
-      }
+        &:first-child {
+          background-color: #25aa5a;
+        }
 
-      .input-empty-alert {
-        position: absolute;
-        color: red;
-        bottom: -0.6rem;
-        left: 1.5rem;
-
-        font-size: 1.1rem;
-        line-height: 1.1rem;
+        &:last-child {
+          background-color: #a92525;
+        }
       }
     }
-    // end of form-gr
+    // end of .btn-wrap
   }
-  // end of .form-wrap
-
-  .btn-wrap {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1rem;
-
-    font-size: 1.4rem;
-
-    button {
-      width: 10rem;
-      height: 3.6rem;
-      border-radius: 0.8rem;
-      cursor: pointer;
-
-      text-transform: uppercase;
-      font-weight: 600;
-
-      &:first-child {
-        background-color: #25aa5a;
-      }
-
-      &:last-child {
-        background-color: #a92525;
-      }
-    }
-  }
-  // end of .btn-wrap
 }

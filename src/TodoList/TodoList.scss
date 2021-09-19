@@ -60,7 +60,7 @@
       }
 
       td {
-        padding: 0.2rem 0;
+        padding: 0.6rem 0;
       }
     }
   }
@@ -128,7 +128,13 @@
     }
 
     span + span {
-      margin-top: 0.3rem;
+      margin-top: 0.2rem;
+    }
+
+    @media (max-width: 400px) {
+      & {
+        display: none;
+      }
     }
   }
 }
