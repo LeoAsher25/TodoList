@@ -85,7 +85,9 @@ const AddTodoBox = (props) => {
               style={{ backgroundColor: style.bgColor, color: style.color }}
             />
             {inputIsEmpty ? (
-              <div className="input-empty-alert">Looks good!</div>
+              <div className="input-empty-alert">
+                Tên công việc không được để trống!
+              </div>
             ) : (
               ""
             )}
