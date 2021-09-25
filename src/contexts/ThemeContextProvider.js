@@ -6,12 +6,14 @@ const ThemeContextProvider = (props) => {
   const [theme, setTheme] = useState({
     isLightTheme: true,
     ligthTheme: {
-      bgColor: "#fefefe",
+      bgColor: "#f2f2f2",
       color: "#111",
+      bgColorBtn: "#83D8FF",
     },
     darkTheme: {
       bgColor: "#333",
       color: "#eee",
+      bgColorBtn: "#749DD6",
     },
   });
 

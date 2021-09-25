@@ -34,4 +34,61 @@ button {
     // end of todo-wrap
   }
   // end of .app-content
+
+  .footer {
+    position: fixed;
+    right: 0;
+    bottom: 3rem;
+    width: 100%;
+
+    .footer__wrap {
+      display: flex;
+      justify-content: space-around;
+
+      .footer-item {
+        position: relative;
+
+        .footer-item-img {
+          position: relative;
+          width: 4rem;
+          height: 4rem;
+          border-radius: 50%;
+          z-index: 1;
+
+          opacity: 0.6;
+          transition: 0.5s;
+        }
+
+        .title {
+          bottom: 150%;
+          position: absolute;
+          min-width: 20rem;
+          text-align: center;
+
+          font-size: 1.4rem;
+          padding: 0.6rem 1rem;
+          left: 50%;
+          transform: translate(-50%, 2rem);
+
+          border-radius: 0.5rem;
+          color: #fff;
+          box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+          opacity: 0;
+
+          transition: 0.5s;
+        }
+
+        .footer-item-img:hover {
+          opacity: 1;
+          transform: translateY(-1rem) scale(1.2);
+          box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.3);
+
+          & ~ .title {
+            opacity: 1;
+            transform: translate(-50%, 0rem);
+          }
+        }
+      }
+    }
+  }
 }
