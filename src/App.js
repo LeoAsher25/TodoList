@@ -303,14 +303,10 @@ function App() {
           <div className="footer__wrap">
             <a
               target="_blank"
-              href="https://www.facebook.com/leoasher.cf"
+              href="https://www.facebook.com/leoasher.dev"
               className="footer-item"
             >
-              <img
-                className="footer-item-img"
-                src="https://lh3.google.com/u/0/d/1PNXETFNzmfmedNjbo7_vOhkqDTZq8h78=w1062-h946-iv1"
-                alt=""
-              />
+              <img className="footer-item-img" src="./img/leoasher.png" alt="" />
               <div
                 className="title"
                 style={{ backgroundColor: style.bgColorBtn }}
@@ -321,15 +317,11 @@ function App() {
 
             <a
               target="_blank"
-              href="https://www.facebook.com/petsla.vn"
+              href="https://www.facebook.com/petsla.cf"
               className="footer-item"
             >
-              <img
-                className="footer-item-img"
-                src="https://lh3.googleusercontent.com/fife/AAWUweUyi4_GyzgGGVscTgXSXBZW0tPqeZvqS_9IujbDDfs8DsKRZlAwi60nWr0mbybd9rmpj_vxHfFZVTgfzeAWlBhlmzATIflCNnvaRYHJgoIotUDxngRi0M_B96Xtm7VTkGZtocJA9JfZhrrDPCJkudvZ6sVLCMUNqiDjtcb7_0vmue77uTSWXK1LyLUsDOJaM7W0OVDws6IB5OGePdkUFG0D-ym1ECVE-c5GhZCkS9ugRQT2rfjMariy2ssRggp8lTPluonipjeRHooekjf6_r3b5ulUq1bkrMdxYpIRLeRjh7mTvXrXpxttszP3wmpcwJHy7xbc_Lcez03xL0rbQZwTwWeLEt7BgD7JTMtzXzubGDgVW6FzKF7eUhhQpyQWPfwdCkLAHrXflw7juz3hno8ubgx-0OpUyjJNidnbP1KsNaFdF3ENEINJMoGccRM3PbwQ111Llq1XCSCbiulUWqQwHJJMNO9Tel3FBNivotSXYy8Gx3nA5bfKUScdMSze7M1dTjzcvAFrSYSEH75T-aO86LYD1AnfAf9AufbMXnT_22rEeEOoVnxms2iqG0VYn9Mb2piihjIwOVyL5HqnkTjEyCsMX-buIl1jygrXBKSiD10zx-z2d4YEjBA99fZjsAPfAEsBz4ngukzOX1SdVnW6krBJZiYZyuaYNJb9iyF8GolVwQJtP-EULubPLzniZ225NkdQBZGF6Sb1nAEEwdoVRx5KY94cag=w1062-h946-ft"
-                alt=""
-              />
 
+              <img className="footer-item-img" src="./img/petsla1.png" alt="" />
               <div
                 className="title"
                 style={{ backgroundColor: style.bgColorBtn }}
